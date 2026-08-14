@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "nombre": "BSNC",
+    "nombre_archivo_salida": "Resumen Cyber BSNC",
+    "identificadores": [
+      "BS de Negocios Colombia",
+      "Santander Colombia",
+      "SNC",
+      "SEC",
+      "SBI",
+      "UNC"
+    ],
+    "plantilla_ppt": "Plantilla resumen BSNC.pptx",
+    "tema_acta": "Seguimiento de agentes, software de alto riesgo y cobertura de herramientas de seguridad (Workstations BSNC)",
+    "objetivo_acta": "Realizar seguimiento y análisis a los planes y fechas de atención del software de alto riesgo, agentes y cobertura de herramientas de seguridad en las Workstations y móviles BSNC."
+  },
+  {
+    "id": 2,
+    "nombre": "SF",
+    "nombre_archivo_salida": "Resumen Cyber SF",
+    "identificadores": [
+      "Santander Financing Colombia",
+      "Santander Consumer Finance Colombia",
+      "financing",
+      "N/A",
+      "CO2",
+      "PCR"
+    ],
+    "plantilla_ppt": "Plantilla resumen SF.pptx",
+    "tema_acta": "Seguimiento de agentes, software de alto riesgo y cobertura de herramientas de seguridad (Workstations SF)",
+    "objetivo_acta": "Realizar seguimiento y análisis a los planes y fechas de atención del software de alto riesgo, agentes y cobertura de herramientas de seguridad en las Workstations y móviles SF."
+  }
+]

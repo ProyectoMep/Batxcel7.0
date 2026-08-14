@@ -1,0 +1,1450 @@
+[
+  {
+    "id": 1,
+    "nombre": "Push security",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Push-Security-Deployment-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "push security enabled",
+          "operador": "igual",
+          "valor": "No"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "push security enabled",
+            "operador": "igual",
+            "valor": "Yes"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Herramientas - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Push Security:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 4,
+    "nombre": "DLP Netskope",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Devices_Export_*.csv",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company_softerra"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Endpoint_DLP_Status",
+          "operador": "igual",
+          "valor": "Disabled"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "softerra.xlsx",
+        "columna_base": "user",
+        "columna_cruzar": "mail",
+        "columnas_extraer": [
+          "company_softerra"
+        ],
+        "texto_a_quitar_del_base": null
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "Endpoint_DLP_Status",
+            "operador": "igual",
+            "valor": "Enabled"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "DLP Netskope:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 5,
+    "nombre": "Cifrado",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Workstation-Encryption-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Encription",
+          "operador": "igual",
+          "valor": "No"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "encription",
+            "operador": "igual",
+            "valor": "Yes"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Herramientas - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Cifrado:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 6,
+    "nombre": "Crowdstrike",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Detail-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Name",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "Company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Crowdstrike",
+          "operador": "igual",
+          "valor": "Not deploy"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 1.0,
+      "criterio_favor": [
+        [
+          {
+            "columna": "crowdstrike",
+            "operador": "igual",
+            "valor": "Deploy"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": null,
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 7,
+    "nombre": "Netskope Workstations",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Windows-Deployment-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Deploy Text",
+          "operador": "igual",
+          "valor": "Not Deploy"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "deploy text",
+            "operador": "igual",
+            "valor": "Deploy"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Netskope Workstations:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 8,
+    "nombre": "Netskope PC virtuales",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Cloud-PCs-Deployment-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Deploy Text",
+          "operador": "igual",
+          "valor": "Not Deploy"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "deploy text",
+            "operador": "igual",
+            "valor": "Deploy"
+          }
+        ]
+      ],
+      "criterio_total": [
+        [
+          {
+            "columna": "hostname",
+            "operador": "contiene",
+            "valor": "SANCO"
+          }
+        ]
+      ],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Netskope Virtuales:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 9,
+    "nombre": "High Risk Software",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "high risk software*.xlsx",
+    "archivo_respaldo_patron": "high risk software*.xlsx",
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": "<",
+      "umbral": 0.05,
+      "criterio_favor": [],
+      "criterio_total": [],
+      "criterio_total_fijo": 1102,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": null,
+    "destacado_ppt": true,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 10,
+    "nombre": "Qualys no cmdb",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Qualys-Workstations-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "In Qualys",
+          "operador": "igual",
+          "valor": "Not Deploy"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "cmdb_ci_computer.xlsx",
+        "columna_base": "hostname",
+        "columna_cruzar": "Name",
+        "columnas_extraer": [
+          "Name",
+          "CI ID",
+          "Status",
+          "Status reason"
+        ],
+        "texto_a_quitar_del_base": null
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "CI ID",
+            "operador": "no_vacio",
+            "valor": ""
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Qualys No cmdb",
+    "destacado_ppt": false,
+    "operaciones_ppt": [
+      {
+        "nombre": "na",
+        "hoja_fuente": "Qualys no cmdb",
+        "condicion": [
+          [
+            {
+              "columna": "Name",
+              "operador": "vacio",
+              "valor": ""
+            }
+          ]
+        ]
+      },
+      {
+        "nombre": "compliant",
+        "hoja_fuente": "Qualys no cmdb",
+        "condicion": [
+          [
+            {
+              "columna": "in qualys",
+              "operador": "no_vacio",
+              "valor": ""
+            }
+          ]
+        ]
+      }
+    ],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 11,
+    "nombre": "Cobertura Qualys",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Agents Based-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "type",
+          "operador": "igual",
+          "valor": "Workstation"
+        },
+        {
+          "columna": "deployment",
+          "operador": "igual",
+          "valor": "Failed"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.95,
+      "criterio_favor": [
+        [
+          {
+            "columna": "type",
+            "operador": "igual",
+            "valor": "Workstation"
+          },
+          {
+            "columna": "deployment",
+            "operador": "igual",
+            "valor": "Passed"
+          }
+        ]
+      ],
+      "criterio_total": [
+        [
+          {
+            "columna": "type",
+            "operador": "igual",
+            "valor": "Workstation"
+          }
+        ]
+      ],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": null,
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 12,
+    "nombre": "Workstations Retired",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Workstations_Retired-Details-*.xlsx",
+    "archivo_respaldo_patron": "Workstations_Retired*.xlsx",
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "AD Company"
+    ],
+    "criterios_incumplimiento": [],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": "<",
+      "umbral": 0.05,
+      "criterio_favor": [],
+      "criterio_total": [],
+      "criterio_total_fijo": 1102,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": null,
+    "destacado_ppt": true,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 13,
+    "nombre": "Non-Phishing",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Cloud_Authentication_Non_Phishing_PasswordLess-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "User Principal Name",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Non-Phishing Resistant Methods",
+          "operador": "no_vacio",
+          "valor": ""
+        },
+        {
+          "columna": "Block Non-Phishing Resistant Methods",
+          "operador": "igual",
+          "valor": "No"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 1.0,
+      "criterio_favor": [
+        [
+          {
+            "columna": "block non-phishing resistant methods",
+            "operador": "igual",
+            "valor": "yes"
+          }
+        ],
+        [
+          {
+            "columna": "non-phishing resistant methods",
+            "operador": "vacio",
+            "valor": ""
+          },
+          {
+            "columna": "block non-phishing resistant methods",
+            "operador": "igual",
+            "valor": "no"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Usuarios",
+    "grupo_visual_ppt": "SMS",
+    "titulo_ppt": "Non-phishing Resistant",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 14,
+    "nombre": "Windows hello",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Cloud_Authentication_Non_Phishing_PasswordLess-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "User Principal Name",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Registered Methods",
+          "operador": "no_contiene",
+          "valor": "hello"
+        }
+      ]
+    ],
+    "criterios_limpieza": [
+      [
+        {
+          "columna": "job profile",
+          "operador": "contiene",
+          "valor": "Customer Sales & Support"
+        }
+      ],
+      [
+        {
+          "columna": "title",
+          "operador": "contiene",
+          "valor": "Customer Sales & Support"
+        }
+      ],
+      [
+        {
+          "columna": "job profile",
+          "operador": "contiene",
+          "valor": "SANCO"
+        }
+      ],
+      [
+        {
+          "columna": "model",
+          "operador": "contiene",
+          "valor": "SM-T"
+        }
+      ],
+      [
+        {
+          "columna": "model",
+          "operador": "contiene",
+          "valor": "SM-X"
+        }
+      ],
+      [
+        {
+          "columna": "model",
+          "operador": "contiene",
+          "valor": "Ipad"
+        }
+      ],
+      [
+        {
+          "columna": "model",
+          "operador": "contiene",
+          "valor": "Iphone"
+        }
+      ]
+    ],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "USER.xlsx",
+        "columna_base": "User Principal Name",
+        "columna_cruzar": "CF - ESI - ESP Local Id",
+        "columnas_extraer": [
+          "Job Profile"
+        ],
+        "texto_a_quitar_del_base": "@ucloud.santandergroup.net"
+      },
+      {
+        "archivo_patron": "softerra.xlsx",
+        "columna_base": "user principal name",
+        "columna_cruzar": "employeenumber",
+        "columnas_extraer": [
+          "title",
+          "company_softerra",
+          "description"
+        ],
+        "texto_a_quitar_del_base": "@ucloud.santandergroup.net"
+      },
+      {
+        "archivo_patron": "DevicesWithInventory_*.csv",
+        "columna_base": "User Principal Name",
+        "columna_cruzar": "primary user upn",
+        "columnas_extraer": [
+          "model"
+        ],
+        "texto_a_quitar_del_base": null
+      },
+      {
+        "archivo_patron": "cmdb_ci_computer.xlsx",
+        "columna_base": "description",
+        "columna_cruzar": "Assigned to",
+        "columnas_extraer": [
+          "Name"
+        ],
+        "texto_a_quitar_del_base": null
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "registered methods",
+            "operador": "contiene",
+            "valor": "hello"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": [
+        [
+          {
+            "columna": "job profile",
+            "operador": "contiene",
+            "valor": "Customer Sales & Support"
+          }
+        ],
+        [
+          {
+            "columna": "title",
+            "operador": "contiene",
+            "valor": "Customer Sales & Support"
+          }
+        ],
+        [
+          {
+            "columna": "job profile",
+            "operador": "contiene",
+            "valor": "SANCO"
+          }
+        ],
+        [
+          {
+            "columna": "model",
+            "operador": "contiene",
+            "valor": "SM-T"
+          }
+        ],
+        [
+          {
+            "columna": "model",
+            "operador": "contiene",
+            "valor": "SM-X"
+          }
+        ],
+        [
+          {
+            "columna": "model",
+            "operador": "contiene",
+            "valor": "Ipad"
+          }
+        ],
+        [
+          {
+            "columna": "model",
+            "operador": "contiene",
+            "valor": "Iphone"
+          }
+        ]
+      ]
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Usuarios",
+    "grupo_visual_ppt": "MFA",
+    "titulo_ppt": "Windows Hello:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 15,
+    "nombre": "MFA",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Cloud_Authentication_Non_Phishing_PasswordLess-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "User Principal Name",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Registered Methods",
+          "operador": "vacio",
+          "valor": ""
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "softerra.xlsx",
+        "columna_base": "user principal name",
+        "columna_cruzar": "employeenumber",
+        "columnas_extraer": [
+          "title",
+          "company_softerra",
+          "description"
+        ],
+        "texto_a_quitar_del_base": "@ucloud.santandergroup.net"
+      },
+      {
+        "archivo_patron": "cmdb_ci_computer.xlsx",
+        "columna_base": "description",
+        "columna_cruzar": "Assigned to",
+        "columnas_extraer": [
+          "Name"
+        ],
+        "texto_a_quitar_del_base": null
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "registered methods",
+            "operador": "no_vacio",
+            "valor": ""
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Usuarios",
+    "grupo_visual_ppt": "MFA",
+    "titulo_ppt": "Registration:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 16,
+    "nombre": "Ironchip",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "*UTC.csv",
+    "archivo_respaldo_patron": null,
+    "columna_id": "username",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Status",
+          "operador": "igual",
+          "valor": "Invited"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "status",
+            "operador": "distinto",
+            "valor": "invited"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Usuarios",
+    "grupo_visual_ppt": "Ironchip",
+    "titulo_ppt": null,
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 17,
+    "nombre": "Harmony Instalado",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Deploy-MTD-Android-iOS-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Username",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Harmony",
+          "operador": "igual",
+          "valor": "Not deploy"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "USER.xlsx",
+        "columna_base": "username",
+        "columna_cruzar": "CF - ESI - ESP Local Id",
+        "columnas_extraer": [
+          "Legal Name",
+          "Company - ID"
+        ],
+        "texto_a_quitar_del_base": null
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.99,
+      "criterio_favor": [
+        [
+          {
+            "columna": "harmony",
+            "operador": "igual",
+            "valor": "deploy"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Antimalware - Dispositivos Moviles",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Harmony (Protect) - Instalación",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 18,
+    "nombre": "MTD Sincronizado",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Deploy-MTD-Android-iOS-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Username",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Status",
+          "operador": "igual",
+          "valor": "Not deploy"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "USER.xlsx",
+        "columna_base": "username",
+        "columna_cruzar": "CF - ESI - ESP Local Id",
+        "columnas_extraer": [
+          "Legal Name"
+        ],
+        "texto_a_quitar_del_base": "@ucloud.santandergroup.net"
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "status",
+            "operador": "igual",
+            "valor": "deploy"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Antimalware - Dispositivos Moviles",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Harmony (MTD) – No Sincroniza",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 19,
+    "nombre": "MTD Version",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "MTD-Client-Version-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Username",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "Client Version Update",
+          "operador": "igual",
+          "valor": "No"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "USER.xlsx",
+        "columna_base": "username",
+        "columna_cruzar": "CF - ESI - ESP Local Id",
+        "columnas_extraer": [
+          "Legal Name"
+        ],
+        "texto_a_quitar_del_base": "@ucloud.santandergroup.net"
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "client version update",
+            "operador": "igual",
+            "valor": "yes"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Antimalware - Dispositivos Moviles",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "MTD client version",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 20,
+    "nombre": "Moviles Compliant",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "DevicesWithInventory_*.csv",
+    "archivo_respaldo_patron": null,
+    "columna_id": "primary user upn",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "Company - ID",
+      "company_softerra"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "os",
+          "operador": "no_contiene",
+          "valor": "Windows"
+        }
+      ]
+    ],
+    "criterios_limpieza": [
+      [
+        {
+          "columna": "os al dia",
+          "operador": "igual",
+          "valor": "actualizado"
+        },
+        {
+          "columna": "deprecado",
+          "operador": "igual",
+          "valor": "OK"
+        },
+        {
+          "columna": "compliance",
+          "operador": "igual",
+          "valor": "Compliant"
+        }
+      ]
+    ],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "softerra.xlsx",
+        "columna_base": "Primary user email address",
+        "columna_cruzar": "mail",
+        "columnas_extraer": [
+          "company_softerra"
+        ],
+        "texto_a_quitar_del_base": null
+      },
+      {
+        "archivo_patron": "USER.xlsx",
+        "columna_base": "primary user upn",
+        "columna_cruzar": "CF - ESI - ESP Local Id",
+        "columnas_extraer": [
+          "Company - ID"
+        ],
+        "texto_a_quitar_del_base": "@ucloud.santandergroup.net"
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "compliance",
+            "operador": "distinto",
+            "valor": "Noncompliant"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": "moviles_os_al_dia",
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Antimalware - Dispositivos Moviles",
+    "grupo_visual_ppt": "Cumplimiento",
+    "titulo_ppt": "Sincronización:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 21,
+    "nombre": "Moviles Update",
+    "categoria": "Dispositivos Móviles",
+    "obligatoria": true,
+    "incluir_en_reporte": false,
+    "archivo_patron": "DevicesWithInventory_*.csv",
+    "archivo_respaldo_patron": null,
+    "columna_id": "primary user upn",
+    "limpiar_id": "@ucloud.santandergroup.net",
+    "columnas_separacion": [
+      "Company - ID",
+      "company_softerra"
+    ],
+    "criterios_incumplimiento": [],
+    "criterios_limpieza": [],
+    "enriquecimientos": [
+      {
+        "archivo_patron": "softerra.xlsx",
+        "columna_base": "Primary user email address",
+        "columna_cruzar": "mail",
+        "columnas_extraer": [
+          "company_softerra"
+        ],
+        "texto_a_quitar_del_base": null
+      }
+    ],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "os al dia",
+            "operador": "igual",
+            "valor": "actualizado"
+          }
+        ]
+      ],
+      "criterio_total": [
+        [
+          {
+            "columna": "os",
+            "operador": "no_contiene",
+            "valor": "Windows"
+          }
+        ]
+      ],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": "moviles_os_al_dia",
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Antimalware - Dispositivos Moviles",
+    "grupo_visual_ppt": "Update",
+    "titulo_ppt": "Total:",
+    "destacado_ppt": false,
+    "operaciones_ppt": [
+      {
+        "nombre": "IOS",
+        "hoja_fuente": "Moviles Compliant",
+        "condicion": [
+          [
+            {
+              "columna": "os",
+              "operador": "contiene",
+              "valor": "iOS"
+            },
+            {
+              "columna": "os al dia",
+              "operador": "contiene",
+              "valor": "desactualizado"
+            }
+          ]
+        ]
+      },
+      {
+        "nombre": "Android",
+        "hoja_fuente": "Moviles Compliant",
+        "condicion": [
+          [
+            {
+              "columna": "os",
+              "operador": "contiene",
+              "valor": "Android"
+            },
+            {
+              "columna": "os al dia",
+              "operador": "contiene",
+              "valor": "desactualizado"
+            }
+          ]
+        ]
+      },
+      {
+        "nombre": "update",
+        "hoja_fuente": "Moviles Compliant",
+        "condicion": [
+          [
+            {
+              "columna": "os al dia",
+              "operador": "contiene",
+              "valor": "desactualizado"
+            }
+          ]
+        ]
+      },
+      {
+        "nombre": "noncomply",
+        "hoja_fuente": "Moviles Compliant",
+        "condicion": [
+          [
+            {
+              "columna": "compliance",
+              "operador": "contiene",
+              "valor": "Noncompliant"
+            }
+          ]
+        ]
+      }
+    ],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 22,
+    "nombre": "Qualys cmdb",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": false,
+    "archivo_patron": "Qualys-Workstations-Details-*.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "company"
+    ],
+    "criterios_incumplimiento": [],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "in qualys",
+            "operador": "igual",
+            "valor": "Deploy"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": null,
+    "titulo_ppt": "Qualys cmdb",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  },
+  {
+    "id": 23,
+    "nombre": "Prueba 1",
+    "categoria": "Workstations",
+    "obligatoria": true,
+    "incluir_en_reporte": true,
+    "archivo_patron": "Archivo prueba.xlsx",
+    "archivo_respaldo_patron": null,
+    "columna_id": "Hostname",
+    "limpiar_id": null,
+    "columnas_separacion": [
+      "Entidad"
+    ],
+    "criterios_incumplimiento": [
+      [
+        {
+          "columna": "estado",
+          "operador": "igual",
+          "valor": "no"
+        }
+      ]
+    ],
+    "criterios_limpieza": [],
+    "enriquecimientos": [],
+    "cumplimiento": {
+      "aplica": true,
+      "operador": ">",
+      "umbral": 0.97,
+      "criterio_favor": [
+        [
+          {
+            "columna": "estado",
+            "operador": "igual",
+            "valor": "yes"
+          }
+        ]
+      ],
+      "criterio_total": [],
+      "criterio_total_fijo": null,
+      "excluir": []
+    },
+    "funcion_especial": null,
+    "instrucciones_descarga": "",
+    "imagen_instructivo": null,
+    "seccion_ppt": "Agentes - Workstations",
+    "grupo_visual_ppt": "prueba",
+    "titulo_ppt": "prueba",
+    "destacado_ppt": false,
+    "operaciones_ppt": [],
+    "orden_ppt": 0,
+    "filtro_entidad": {}
+  }
+]

@@ -1,0 +1,39 @@
+{
+  "fuentes": [
+    {
+      "patron": "PCR.csv"
+    },
+    {
+      "patron": "SBI.csv"
+    },
+    {
+      "patron": "SEC.csv"
+    },
+    {
+      "patron": "SNC.csv"
+    },
+    {
+      "patron": "UNC.csv"
+    },
+    {
+      "patron": "CO2.csv"
+    }
+  ],
+  "skiprows": [
+    1
+  ],
+  "columnas": [
+    "name",
+    "company",
+    "countryCode",
+    "description",
+    "displayName",
+    "employeeNumber",
+    "mail",
+    "title"
+  ],
+  "renombrar": {
+    "company": "company_softerra"
+  },
+  "salida": "softerra.xlsx"
+}

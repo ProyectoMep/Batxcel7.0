@@ -1,0 +1,50 @@
+[
+  {
+    "id": 1,
+    "nombre": "Santiago Aguilera",
+    "cargo": "Ciberseguridad",
+    "estado": "Asistió"
+  },
+  {
+    "id": 2,
+    "nombre": "Alejandro Ciprian",
+    "cargo": "Ciberseguridad",
+    "estado": "Asistió"
+  },
+  {
+    "id": 3,
+    "nombre": "Stefany Rodríguez",
+    "cargo": "Ciberseguridad",
+    "estado": "Asistió"
+  },
+  {
+    "id": 4,
+    "nombre": "Daniel Moreno",
+    "cargo": "Soporte Técnico",
+    "estado": "Asistió"
+  },
+  {
+    "id": 5,
+    "nombre": "Santiago Aguilera",
+    "cargo": "Ciberseguridad",
+    "estado": "Asistió"
+  },
+  {
+    "id": 6,
+    "nombre": "Alejandro Ciprian",
+    "cargo": "Ciberseguridad",
+    "estado": "Asistió"
+  },
+  {
+    "id": 7,
+    "nombre": "Stefany Rodríguez",
+    "cargo": "Ciberseguridad",
+    "estado": "Asistió"
+  },
+  {
+    "id": 8,
+    "nombre": "Daniel Moreno",
+    "cargo": "Soporte Técnico",
+    "estado": "Asistió"
+  }
+]

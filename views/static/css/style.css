@@ -1,0 +1,257 @@
+/* ══════════════════════════════════════════════
+   BATXCEL 7.0 — Tema oscuro azul (toda la app)
+   ══════════════════════════════════════════════ */
+
+* { box-sizing: border-box; font-family: Arial, sans-serif; }
+
+:root {
+  --bg-app: #0b1220;
+  --bg-sidebar: #0f1729;
+  --bg-tarjeta: #131c2e;
+  --borde: #1e293b;
+  --texto: #e2e8f0;
+  --texto-muted: #94a3b8;
+  --azul-titulo: #7dd3fc;
+  --azul-subtitulo: #93c5fd;
+  --azul-activo: #2563eb;
+  --azul-hover: #1d4ed8;
+  --verde: #4ade80;
+  --verde-badge-bg: #064e3b;
+  --rojo: #f87171;
+  --rojo-badge-bg: #4c0519;
+  --mint: #a7f3d0;
+  --mint-hover: #6ee7b7;
+}
+
+body { margin: 0; background: var(--bg-app); color: var(--texto); }
+
+.layout { display: flex; min-height: 100vh; }
+
+/* ══════ Sidebar ══════ */
+.menu { width: 240px; background: var(--bg-sidebar); padding: 20px 14px; }
+.menu h3 {
+  margin: 0 0 18px; font-size: 12px; letter-spacing: 2px;
+  color: var(--texto-muted); text-transform: uppercase;
+}
+.menu-item {
+  display: flex; align-items: center; justify-content: space-between;
+  width: 100%; text-align: left; padding: 11px 14px;
+  margin-bottom: 6px; background: transparent; color: var(--texto-muted);
+  border: none; border-radius: 8px; cursor: pointer; font-size: 14px;
+}
+.menu-item::after { content: "›"; opacity: .5; }
+.menu-item:hover:not([disabled]) { background: #1a2540; color: var(--texto); }
+.menu-item.activo { background: var(--azul-activo); color: #fff; }
+.menu-item[disabled] { opacity: .35; cursor: not-allowed; }
+.menu-item[disabled]::after { content: ""; }
+
+/* ══════ Contenido general ══════ */
+.contenido { flex: 1; padding: 24px; }
+.contenido h2 { color: var(--azul-titulo); letter-spacing: .5px; font-size: 20px; }
+.oculto { display: none; }
+
+/* ══════ Botones ══════ */
+.btn-primario, .btn-secundario {
+  padding: 8px 14px; border-radius: 6px; border: none; cursor: pointer; font-size: 13px;
+}
+.btn-primario { background: var(--azul-activo); color: #fff; }
+.btn-primario:hover { background: var(--azul-hover); }
+.btn-secundario { background: #1a2540; color: var(--texto); border: 1px solid var(--borde); }
+.btn-secundario:hover { background: #223055; }
+
+.btn-pill {
+  background: var(--mint); color: #064e3b; font-weight: bold;
+  border: none; border-radius: 999px; padding: 12px 32px;
+  cursor: pointer; font-size: 14px;
+}
+.btn-pill:disabled { opacity: .5; cursor: not-allowed; }
+.btn-pill:hover:not(:disabled) { background: var(--mint-hover); }
+
+.btn-cerrar-x { background: transparent; border: none; color: var(--texto-muted); font-size: 18px; cursor: pointer; }
+.btn-link { text-decoration: none; display: inline-block; }
+.btn-ojo { background: transparent; border: none; cursor: pointer; color: #60a5fa; font-size: 15px; padding: 2px 6px; }
+.btn-ojo:hover { color: var(--azul-subtitulo); }
+
+/* ══════ Tabla de Métricas ══════ */
+.tabla-metricas {
+  width: 100%; border-collapse: collapse; margin-top: 16px;
+  background: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 8px; overflow: hidden;
+}
+.tabla-metricas th, .tabla-metricas td {
+  text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--borde); font-size: 13px;
+}
+.tabla-metricas th { background: #1a2540; color: var(--azul-subtitulo); }
+.tabla-metricas tr:hover td { background: #16223a; }
+
+.badge-si { background: var(--verde-badge-bg); color: var(--verde); padding: 2px 8px; border-radius: 10px; font-size: 12px; }
+.badge-no { background: var(--rojo-badge-bg); color: var(--rojo); padding: 2px 8px; border-radius: 10px; font-size: 12px; }
+
+/* ══════ Panel "Generar reporte" ══════ */
+.panel-oscuro { background: transparent; padding: 0; }
+.titulo-oscuro { color: var(--azul-titulo); letter-spacing: 1px; font-size: 20px; margin-top: 0; }
+.tarjeta-oscura { background: var(--bg-tarjeta); border: 1px solid var(--borde); border-radius: 10px; padding: 20px; }
+.subtitulo-oscuro { color: var(--azul-subtitulo); font-weight: bold; margin: 0 0 6px; font-size: 14px; }
+.ayuda-oscura { color: var(--texto-muted); font-size: 12px; margin: 0 0 16px; }
+.ayuda-oscura.error-oscuro { color: var(--rojo); }
+.ayuda-oscura.ok-oscuro { color: var(--verde); }
+
+.grid-estado { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 32px; }
+.fila-estado { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.icono-estado { font-size: 15px; }
+.nombre-estado { flex: 1; font-size: 14px; }
+
+.acciones-generar { margin-top: 20px; text-align: center; }
+
+.carpeta-fecha-oscura { margin-top: 14px; }
+.lista-archivos-oscura { list-style: none; padding: 0; margin: 6px 0; }
+.lista-archivos-oscura li {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 0; border-bottom: 1px solid var(--borde); font-size: 13px;
+}
+
+/* ══════ Modales (todos oscuros) ══════ */
+.modal { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: flex; align-items: center; justify-content: center; z-index: 50; }
+.modal.oculto { display: none; }
+.modal-contenido {
+  background: var(--bg-tarjeta); color: var(--texto); border: 1px solid var(--borde);
+  padding: 24px; border-radius: 10px; width: 520px; max-height: 90vh; overflow-y: auto;
+}
+.modal-contenido h3 { color: var(--azul-titulo); margin-top: 0; }
+.modal-contenido label { display: block; margin-top: 12px; font-size: 13px; font-weight: bold; color: var(--azul-subtitulo); }
+.modal-contenido input[type=text], .modal-contenido input[type=number], .modal-contenido textarea {
+  width: 100%; padding: 8px; margin-top: 4px; border: 1px solid var(--borde);
+  border-radius: 5px; background: #0b1220; color: var(--texto);
+}
+.modal-contenido select { padding: 8px; border: 1px solid var(--borde); border-radius: 5px; background: #0b1220; color: var(--texto); }
+.modal-contenido input[type=file] { margin-top: 4px; font-size: 13px; color: var(--texto-muted); }
+
+.check-line { display: flex; align-items: center; gap: 6px; font-weight: normal !important; color: var(--texto) !important; }
+.modal-acciones { margin-top: 20px; display: flex; justify-content: flex-end; gap: 8px; }
+
+.modal-ancho { width: 90vw; max-width: 1100px; }
+.modal-preview-header { display: flex; justify-content: space-between; align-items: center; }
+.preview-tabs { display: flex; gap: 4px; flex-wrap: wrap; margin: 12px 0; }
+.tab-btn { padding: 6px 10px; border: 1px solid var(--borde); border-radius: 6px; background: #1a2540; color: var(--texto); cursor: pointer; font-size: 12px; }
+.tab-btn.activo { background: var(--azul-activo); color: #fff; border-color: var(--azul-activo); }
+.preview-contenido { max-height: 60vh; overflow: auto; font-size: 12px; }
+.preview-contenido table { border-collapse: collapse; width: 100%; color: var(--texto); }
+.preview-contenido th, .preview-contenido td { border: 1px solid var(--borde); padding: 4px 8px; text-align: left; }
+.preview-contenido th { background: #1a2540; }
+
+.caja-instrucciones {
+  background: #0b1220; border: 1px solid var(--borde); border-radius: 8px;
+  padding: 14px; font-size: 13px; white-space: pre-wrap; margin-bottom: 14px;
+}
+.imagen-instructivo { width: 100%; border-radius: 8px; border: 1px solid var(--borde); }
+.preview-imagen { max-width: 100%; margin-top: 8px; border-radius: 6px; border: 1px solid var(--borde); }
+
+/* ══════ Fieldsets del formulario de Métrica ══════ */
+.bloque { border: 1px solid var(--borde); border-radius: 8px; padding: 14px; margin-top: 16px; }
+.bloque legend { font-weight: bold; padding: 0 6px; color: var(--azul-subtitulo); }
+.ayuda { font-size: 12px; color: var(--texto-muted); margin: 4px 0 0; }
+.ayuda.ok { color: var(--verde); }
+.ayuda.error { color: var(--rojo); }
+
+.condicion-row { display: flex; gap: 6px; margin-top: 6px; }
+.condicion-row input { flex: 1; padding: 6px; border: 1px solid var(--borde); border-radius: 5px; background: #0b1220; color: var(--texto); }
+.condicion-row select { padding: 6px; border: 1px solid var(--borde); border-radius: 5px; background: #0b1220; color: var(--texto); }
+.condicion-row button { background: var(--rojo-badge-bg); color: var(--rojo); border: none; border-radius: 5px; cursor: pointer; padding: 0 8px; }
+
+.cruce-box { border: 1px dashed var(--borde); border-radius: 6px; padding: 10px; margin-top: 10px; position: relative; }
+.cruce-box .btn-quitar { position: absolute; top: 8px; right: 8px; background: var(--rojo-badge-bg); color: var(--rojo); border: none; border-radius: 5px; cursor: pointer; padding: 2px 8px; }
+.cruce-box label { font-size: 12px; margin-top: 8px; color: var(--azul-subtitulo); }
+.cruce-box input[type=text], .cruce-box select { width: 100%; padding: 6px; margin-top: 3px; border: 1px solid var(--borde); border-radius: 5px; background: #0b1220; color: var(--texto); }
+.cruce-box select[multiple] { height: 90px; }
+
+#cumplimiento-detalle { margin-top: 10px; }
+#cumplimiento-detalle > label { display: block; margin-top: 12px; font-size: 13px; font-weight: bold; color: var(--azul-subtitulo); }
+#cumplimiento-detalle > select, #cumplimiento-detalle > input[type=number] {
+  width: 100%; padding: 7px; margin-top: 4px; border: 1px solid var(--borde); border-radius: 5px; background: #0b1220; color: var(--texto);
+}
+
+.acordeon-header {
+  display: flex; justify-content: space-between; align-items: center;
+  width: 100%; background: transparent; border: none; cursor: pointer;
+  color: var(--azul-subtitulo); font-weight: bold; font-size: 14px;
+  padding: 8px 0; text-align: left;
+}
+.acordeon-header:hover { color: var(--azul-titulo); }
+.acordeon-flecha { color: var(--texto-muted); font-size: 12px; }
+
+.fila-bandera {
+  border: 1px solid var(--borde); border-radius: 6px; padding: 10px;
+  margin-top: 8px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+}
+.fila-bandera .ayuda { flex-basis: 100%; margin: 4px 0 0; }
+.texto-bandera {
+  background: #0b1220; color: #7dd3fc; padding: 4px 8px; border-radius: 4px;
+  font-family: monospace; font-size: 13px;
+}
+.celda-acciones { display: flex; flex-direction: column; gap: 6px; }
+.btn-accion { width: 130px; text-align: center; }
+
+.campo-obligatorio::after {
+  content: " *";
+  color: var(--rojo, #f87171);
+  font-weight: bold;
+}
+
+.fila-item-simple {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 8px 10px; border: 1px solid var(--borde); border-radius: 6px;
+  margin-top: 6px; font-size: 13px;
+}
+
+/* ══════ Layout en bloque de labels/inputs, SOLO los directos de .bloque ══════
+   Usa el combinador '>' a propósito: así arregla Presentación/Actas/Métrica
+   (donde label/input van directo dentro del fieldset) sin romper las filas
+   anidadas como .condicion-row o .cruce-box, que ya tienen su propio estilo
+   en fila horizontal definido arriba. */
+.bloque > label {
+  display: block;
+  margin-top: 12px;
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--azul-subtitulo);
+}
+.bloque > input[type=text],
+.bloque > input[type=date],
+.bloque > input[type=number],
+.bloque > select,
+.bloque > textarea {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid var(--borde);
+  border-radius: 5px;
+  background: #0b1220;
+  color: var(--texto);
+  box-sizing: border-box;
+}
+
+/* Dentro de .fila-inline, cada campo ocupa su propio espacio en fila,
+   con la etiqueta arriba de su input correspondiente */
+.fila-inline {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+.fila-inline > div {
+  flex: 1;
+  min-width: 0;
+}
+.fila-inline label {
+  margin-top: 0;
+}
+.fila-inline > select,
+.fila-inline > input[type=text] {
+  flex: 1;
+  min-width: 0;
+  padding: 8px;
+  border: 1px solid var(--borde);
+  border-radius: 5px;
+  background: #0b1220;
+  color: var(--texto);
+  box-sizing: border-box;
+}

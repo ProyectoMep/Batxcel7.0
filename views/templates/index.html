@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Batxcel 7.0</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="layout">
+    <nav class="menu">
+      <h3>BATXCEL 7.0</h3>
+      <button class="menu-item activo" data-vista="vista-reporte">📁 Generar reporte</button>
+      <button class="menu-item" data-vista="vista-metricas">📊 Métricas</button>
+      <button class="menu-item" data-vista="vista-presentacion">📽️ Presentación</button>
+      <button class="menu-item" data-vista="vista-actas">📝 Actas</button>
+      <button class="menu-item" disabled title="Próximamente">👥 Prospera</button>
+    </nav>
+
+    <main class="contenido">
+
+      <!-- ═══════ VISTA: GENERAR REPORTE (tema oscuro) ═══════ -->
+      <section id="vista-reporte">
+        <div class="panel-oscuro">
+          <h2 class="titulo-oscuro">GENERAR REPORTE</h2>
+
+          <div class="tarjeta-oscura">
+            <p class="subtitulo-oscuro">Archivos para generar el reporte</p>
+            <p class="ayuda-oscura">Copia estos archivos dentro de <strong>input/</strong> antes de generar. Haz clic en el ojo para ver dónde descargar cada uno.</p>
+
+            <div id="grid-estado-input" class="grid-estado"></div>
+
+            <div class="acciones-generar">
+              <button id="btn-generar-reporte" class="btn-pill">Generar reporte</button>
+              <p id="estado-generacion" class="ayuda-oscura"></p>
+            </div>
+          </div>
+
+          <div class="tarjeta-oscura" style="margin-top:20px;">
+            <p class="subtitulo-oscuro">Reportes generados</p>
+            <div id="arbol-output"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════ VISTA: MÉTRICAS ═══════ -->
+      <section id="vista-metricas" class="oculto">
+        <h2>Métricas de cumplimiento</h2>
+        <button id="btn-nueva-metrica" class="btn-primario">+ Nueva métrica</button>
+
+        <table class="tabla-metricas">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Categoría</th>
+              <th>Obligatoria</th>
+              <th>Archivo patrón</th>
+              <th>Condiciones</th>
+              <th>Cruces</th>
+              <th>Cumplimiento</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-metricas"></tbody>
+        </table>
+      </section>
+
+      <!-- ═══════ VISTA: PRESENTACIÓN PPT ═══════ -->
+      <section id="vista-presentacion" class="oculto">
+        <h2>Generar presentación</h2>
+
+        <fieldset class="bloque">
+          <legend>Nueva presentación</legend>
+
+          <label>Entidad</label>
+          <select id="ppt-entidad"></select>
+
+          <label>Fecha del reporte (semana actual)</label>
+          <select id="ppt-fecha-actual"></select>
+
+          <label>Comparar contra (opcional, si lo dejas vacío usa la semana anterior más reciente)</label>
+          <select id="ppt-fecha-anterior">
+            <option value="">Automático</option>
+          </select>
+
+          <label>Nombre del archivo (opcional)</label>
+          <input type="text" id="ppt-nombre" placeholder="Presentacion_BSNC_2026-08-12">
+
+          <div class="modal-acciones" style="justify-content:flex-start;">
+            <button type="button" id="btn-generar-ppt" class="btn-primario">Generar presentación</button>
+          </div>
+          <p id="ppt-estado" class="ayuda"></p>
+        </fieldset>
+
+        <h2 style="margin-top:24px;">Presentaciones generadas</h2>
+        <div id="ppt-historico"></div>
+      </section>
+
+      <!-- ═══════ VISTA: ACTAS ═══════ -->
+      <section id="vista-actas" class="oculto">
+        <h2>Generar acta de seguimiento</h2>
+
+        <fieldset class="bloque">
+          <legend>1) Datos generales</legend>
+          <label>Entidad</label>
+          <select id="acta-entidad"></select>
+
+          <label>Fecha del reporte (semana actual)</label>
+          <select id="acta-fecha-actual"></select>
+
+          <label>Comparar contra (semana anterior)</label>
+          <select id="acta-fecha-anterior"></select>
+
+          <div class="fila-inline">
+            <div style="flex:1;">
+              <label>Número de acta</label>
+              <input type="text" id="acta-numero" placeholder="12">
+            </div>
+            <div style="flex:1;">
+              <label>Fecha de la reunión</label>
+              <input type="date" id="acta-fecha-reunion">
+            </div>
+          </div>
+
+          <div class="fila-inline">
+            <div style="flex:1;">
+              <label>Hora inicio</label>
+              <input type="text" id="acta-hora-inicio" placeholder="3:00 pm">
+            </div>
+            <div style="flex:1;">
+              <label>Hora fin</label>
+              <input type="text" id="acta-hora-fin" placeholder="4:00 pm">
+            </div>
+          </div>
+
+          <label>Nombre del archivo (opcional)</label>
+          <input type="text" id="acta-nombre" placeholder="Acta 12 de seguimiento BSNC">
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>2) Asistentes</legend>
+          <p class="ayuda">Se cargan automáticamente desde la última acta generada. Puedes agregar o quitar antes de generar la nueva.</p>
+          <button type="button" id="btn-importar-acta" class="btn-secundario">📥 Importar desde la última acta generada</button>
+          <p id="importar-estado" class="ayuda"></p>
+          <div id="lista-asistentes"></div>
+          <div class="fila-inline">
+            <input type="text" id="nuevo-asistente-nombre" placeholder="Nombre">
+            <input type="text" id="nuevo-asistente-cargo" placeholder="Cargo">
+            <button type="button" id="btn-agregar-asistente" class="btn-secundario">+ Agregar</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>3) Observaciones y tareas de seguimiento</legend>
+          <div id="lista-observaciones"></div>
+          <div class="fila-inline">
+            <input type="text" id="nueva-observacion-texto" placeholder="Escribe una observación o tarea...">
+            <button type="button" id="btn-agregar-observacion" class="btn-secundario">+ Agregar</button>
+          </div>
+        </fieldset>
+
+        <button type="button" id="btn-generar-acta" class="btn-primario">Generar acta</button>
+        <p id="acta-estado" class="ayuda"></p>
+
+        <h2 style="margin-top:24px;">Actas generadas</h2>
+        <div id="acta-historico"></div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Modal formulario de Métrica -->
+  <div id="modal-metrica" class="modal oculto">
+    <div class="modal-contenido">
+      <h3 id="modal-titulo">Nueva métrica</h3>
+      <form id="form-metrica">
+        <input type="hidden" id="metrica-id">
+
+        <fieldset class="bloque">
+          <legend>Datos generales</legend>
+
+          <label>Archivo de ejemplo de la métrica (opcional, recomendado)</label>
+          <input type="file" id="metrica-archivo-subida" accept=".xlsx,.xls,.csv">
+          <p id="estado-analisis" class="ayuda"></p>
+
+          <label class="campo-obligatorio">Nombre de la métrica</label>
+          <input type="text" id="metrica-nombre" required placeholder="Push Security">
+
+          <label>Categoría</label>
+          <input type="text" id="metrica-categoria" placeholder="Workstations">
+
+          <label class="check-line">
+            <input type="checkbox" id="metrica-obligatoria" checked>
+            Métrica obligatoria (si no, se omite del reporte y del PPT)
+          </label>
+
+          <label class="check-line">
+            <input type="checkbox" id="metrica-incluir-reporte" checked>
+            Incluir en el reporte (si no, solo se usa para calcular su cumplimiento)
+          </label>
+
+          <label class="campo-obligatorio">Patrón del archivo de entrada</label>
+          <input type="text" id="metrica-archivo-patron" required
+                 placeholder="Push-Security-Deployment-Details-*.xlsx">
+
+          <label>Patrón de respaldo (opcional, plantilla maestra)</label>
+          <input type="text" id="metrica-archivo-respaldo">
+
+          <label class="campo-obligatorio">Columna ID (identifica cada fila)</label>
+          <input type="text" id="metrica-columna-id" required placeholder="Hostname"
+                 list="datalist-columnas">
+
+          <label>Texto a limpiar del ID (opcional)</label>
+          <input type="text" id="metrica-limpiar-id" placeholder="@dominio.com">
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>Presentación PowerPoint</legend>
+          <p class="ayuda">Define bajo qué sección del PPT aparece esta métrica. Déjalo vacío si no debe aparecer en el PPT.</p>
+
+          <label>Sección del PPT</label>
+          <input type="text" id="metrica-seccion-ppt" placeholder="Agentes - Workstations"
+                 list="datalist-secciones-ppt">
+          <datalist id="datalist-secciones-ppt">
+            <option value="Agentes - Workstations">
+            <option value="Herramientas - Workstations">
+            <option value="Usuarios">
+            <option value="Antimalware - Dispositivos Moviles">
+          </datalist>
+
+          <label>Grupo visual (opcional)</label>
+          <input type="text" id="metrica-grupo-visual-ppt" placeholder="Ej: MFA, Ironchip, SMS, Update, Cumplimiento">
+
+          <label>Título en la tarjeta (opcional, si es distinto al nombre)</label>
+          <input type="text" id="metrica-titulo-ppt" placeholder="Ej: Registration:">
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>Trazabilidad: ¿de dónde se descarga este archivo?</legend>
+          <p class="ayuda">Esto se muestra en el ojo 👁️ de la pantalla "Generar reporte", para que cualquiera sepa cómo conseguir el archivo semanal.</p>
+
+          <label>Instrucciones de descarga</label>
+          <textarea id="metrica-instrucciones" rows="4"
+                    placeholder="Ej: Portal X > Reportes > Filtrar por Colombia > Exportar a Excel..."></textarea>
+
+          <label>Imagen de referencia (opcional)</label>
+          <input type="file" id="metrica-imagen" accept=".png,.jpg,.jpeg,.gif,.webp">
+          <p id="estado-imagen" class="ayuda"></p>
+          <img id="preview-imagen-metrica" class="preview-imagen oculto" alt="Vista previa">
+          <input type="hidden" id="metrica-imagen-ruta">
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>Separación por entidad (BSNC / SF)</legend>
+          <p class="ayuda">Columna(s) que indican a qué entidad pertenece cada fila. Si agregas varias, se usa la primera que tenga valor.</p>
+          <div id="separacion-container"></div>
+          <button type="button" id="btn-agregar-separacion" class="btn-secundario">+ Agregar columna</button>
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>Condiciones de incumplimiento (AND)</legend>
+          <p class="ayuda">Filas que cumplen TODAS estas condiciones aparecen en el reporte como incumplimiento.</p>
+          <div id="condiciones-container"></div>
+          <button type="button" id="btn-agregar-condicion" class="btn-secundario">+ Agregar condición</button>
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>Limpieza posterior (opcional)</legend>
+          <p class="ayuda">Filas que coincidan con CUALQUIERA de estos grupos se eliminan del reporte final, después de separar por entidad.</p>
+          <div id="limpieza-container"></div>
+          <button type="button" id="btn-agregar-limpieza" class="btn-secundario">+ Agregar condición de limpieza</button>
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>Cruces con otros archivos (opcional)</legend>
+          <p class="ayuda">Trae columnas de otro archivo (ej. CMDB, softerra) usando una columna en común.</p>
+          <div id="enriquecimientos-container"></div>
+          <button type="button" id="btn-agregar-cruce" class="btn-secundario">+ Agregar cruce</button>
+        </fieldset>
+
+        <fieldset class="bloque">
+          <legend>
+            <label class="check-line">
+              <input type="checkbox" id="cumplimiento-aplica">
+              Calcular % de cumplimiento para esta métrica
+            </label>
+          </legend>
+
+          <div id="cumplimiento-detalle" class="oculto">
+            <label>Esta métrica cumple cuando el resultado es:</label>
+            <div class="fila-inline">
+              <select id="cumplimiento-operador">
+                <option value=">">Mayor o igual al umbral</option>
+                <option value="<">Menor al umbral</option>
+              </select>
+              <input type="number" id="cumplimiento-umbral" step="0.01" min="0" max="1" value="0.97"
+                     placeholder="0.97">
+            </div>
+            <p class="ayuda">El umbral se escribe como decimal (0.97 = 97%).</p>
+
+            <label>Condición "a favor" (numerador): filas que SÍ cumplen</label>
+            <div id="cumplimiento-favor-container"></div>
+            <button type="button" id="btn-agregar-favor" class="btn-secundario">+ Agregar condición</button>
+
+            <label>Total (denominador)</label>
+            <select id="cumplimiento-total-modo">
+              <option value="todas">Todas las filas del archivo</option>
+              <option value="fijo">Número fijo</option>
+              <option value="condicion">Condición</option>
+            </select>
+            <input type="number" id="cumplimiento-total-fijo" class="oculto" placeholder="Ej. 1102">
+            <div id="cumplimiento-total-container" class="oculto"></div>
+            <button type="button" id="btn-agregar-total" class="btn-secundario oculto">+ Agregar condición</button>
+
+            <label>Excluir del universo (opcional)</label>
+            <div id="cumplimiento-excluir-container"></div>
+            <button type="button" id="btn-agregar-excluir" class="btn-secundario">+ Agregar exclusión</button>
+          </div>
+        </fieldset>
+
+        <datalist id="datalist-columnas"></datalist>
+
+        <p class="ayuda">Los campos marcados con <strong style="color:#f87171">*</strong> son obligatorios. Todo lo demás es opcional.</p>
+
+        <div class="modal-acciones">
+          <button type="button" id="btn-cancelar" class="btn-secundario">Cancelar</button>
+          <button type="submit" class="btn-primario">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal preview de Excel -->
+  <div id="modal-preview" class="modal oculto">
+    <div class="modal-contenido modal-ancho">
+      <div class="modal-preview-header">
+        <h3 id="preview-titulo">Vista previa</h3>
+        <button type="button" id="btn-cerrar-preview" class="btn-secundario">Cerrar</button>
+      </div>
+      <div id="preview-tabs" class="preview-tabs"></div>
+      <div id="preview-contenido" class="preview-contenido"></div>
+    </div>
+  </div>
+
+  <!-- Modal instrucciones de descarga (tema oscuro) -->
+  <div id="modal-instrucciones" class="modal oculto">
+    <div class="modal-contenido modal-oscuro">
+      <div class="modal-preview-header">
+        <h3 id="instrucciones-titulo">Nombre métrica</h3>
+        <button type="button" id="btn-cerrar-instrucciones" class="btn-cerrar-x">✕</button>
+      </div>
+      <p class="subtitulo-oscuro" style="margin-top:0;">Instrucciones de dónde descargar este archivo</p>
+      <div id="instrucciones-texto" class="caja-instrucciones"></div>
+      <img id="instrucciones-imagen" class="imagen-instructivo oculto" alt="Instructivo">
+    </div>
+  </div>
+
+  <!-- Modal de banderas PPT -->
+  <div id="modal-banderas" class="modal oculto">
+    <div class="modal-contenido">
+      <h3 id="banderas-titulo">Banderas de la métrica</h3>
+      <p class="ayuda">Copia estos textos (con &lt;&lt; y &gt;&gt;) dentro de la plantilla PowerPoint donde quieres que aparezca cada dato.</p>
+      <div id="banderas-lista"></div>
+      <div class="modal-acciones">
+        <button type="button" id="btn-cerrar-banderas" class="btn-secundario">Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/menu.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/metricas.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/reporte.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/presentacion.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/actas.js') }}"></script>
+</body>
+</html>

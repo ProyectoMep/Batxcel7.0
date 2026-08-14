@@ -1,0 +1,70 @@
+[
+  {
+    "id": 1,
+    "texto": "Semanalmente se enviará a Natalia Cucuma (Technical Solution Application, Infrastructure & Data Architecture Jr. Analyst) registro de los usuarios de Prospera que llevan más de 15 días reportando sin métodos MFA registrados, para verificar si deben ser exceptuados o incluidos en la métrica. – Área Ciberseguridad. (La actividad se viene realizando semanalmente)"
+  },
+  {
+    "id": 2,
+    "texto": "Revisión de los dispositivos que no reportan con Windows Hello ni con MFA para hacer contacto directo y remitir usuarios a Tecnología. – Área Soporte."
+  },
+  {
+    "id": 3,
+    "texto": "Configurar la etiqueta de Colombia en las workstations que están en la CMDB pero no reportan el agente en Qualys. – Área Ciberseguridad / Área Soporte."
+  },
+  {
+    "id": 4,
+    "texto": "Gestión usuario por usuario en la métrica Harmony (MTD) para sincronización de escaneo y seguimiento. – Área Soporte."
+  },
+  {
+    "id": 5,
+    "texto": "Gestión usuario por usuario en la métrica Total Update Móviles para actualización de sistemas operativos iOS y Android. – Área Soporte."
+  },
+  {
+    "id": 6,
+    "texto": "Gestión usuario por usuario en la métrica MFA – Windows Hello para registro de la herramienta. – Área Soporte."
+  },
+  {
+    "id": 7,
+    "texto": "Envío de caso para agregar equipos no registrados actualmente en la CMDB a EUT España. – Área Soporte."
+  },
+  {
+    "id": 8,
+    "texto": "Revisión de dispositivos móviles Noncompliant junto con la fecha de último ingreso para verificar estado actual. Si están retirados, el área de soporte actualmente los gestiona. – Área Soporte."
+  },
+  {
+    "id": 9,
+    "texto": "Semanalmente se abre caso de revisión de PC virtuales en Netskope sin inicio de sesión; si no han iniciado sesión luego de 30 días, se eliminan. – Área Soporte."
+  },
+  {
+    "id": 10,
+    "texto": "En el proceso de retiro de un empleado, se revisa si tiene dispositivo móvil asociado a la empresa. – Área Soporte."
+  },
+  {
+    "id": 11,
+    "texto": "Deshabilitar métodos no resistentes a Phishing (SMS y llamada de voz) a través del grupo de Azure GR_AuhMethods_PhoneFactor_Blocked_CO. – Área Ciberseguridad."
+  },
+  {
+    "id": 12,
+    "texto": "Se hace seguimiento para revisar las acciones tomadas para mejorar la métrica de Cifrado. Se contactó con la persona encargada, quien reportó las máquinas que no estaban reportando en Intune -> Soporte está validando los usuarios."
+  },
+  {
+    "id": 13,
+    "texto": "Se escalará con el área de Ciberseguridad una nueva estrategia para mejorar la métrica de Harmony (MTD) y lograr que los usuarios realicen el escaneo. Está pendiente la mejora en el diseño para el envío de comunicación masiva./Area de Ciber  Se realizó el diseño de las guías y fue aprobado por el área de EUT"
+  },
+  {
+    "id": 14,
+    "texto": "Se escalará con el responsable de la métrica de Push Security la siguiente consulta: ¿Qué criterios hacen que la métrica de la Ciber Dashboard con Push Security genere un reporte? Se evidencia que los equipos tienen la extensión instalada, pero al validar cada navegador, a veces solo uno la tiene activa. ¿Esto puede afectar la métrica? -> Se escalo la consulta con los responsables de la métrica y la fecha no se a recibido respuesta por parte de ellos.  se recibió respuesta y se confirmo que para que reporte debe de estar activo en Chrome y en Edge."
+  },
+  {
+    "id": 15,
+    "texto": "Se va a escalar con el responsable de la métrica de Windows Hello, como se esta midiendo la métrica para ver que campo de Windows se esta censando.  No se a recibido respuesta a la fecha."
+  },
+  {
+    "id": 16,
+    "texto": "Se va a probar una nueva estrategia para contactar a una muestra de usuarios de manera automática para la sincronización de Harmony en los dispositivos móviles, para evaluar los resultados de este ejercicio."
+  },
+  {
+    "id": 17,
+    "texto": "esto es una prueba"
+  }
+]
