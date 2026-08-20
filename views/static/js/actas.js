@@ -1,10 +1,7 @@
 const selActaEntidad = document.getElementById("acta-entidad");
-const selActaFechaActual = document.getElementById("acta-fecha-actual");
-const selActaFechaAnterior = document.getElementById("acta-fecha-anterior");
+const selActaPresentacion = document.getElementById("acta-presentacion");
 const inputActaNumero = document.getElementById("acta-numero");
 const inputActaFechaReunion = document.getElementById("acta-fecha-reunion");
-const inputActaHoraInicio = document.getElementById("acta-hora-inicio");
-const inputActaHoraFin = document.getElementById("acta-hora-fin");
 const inputActaNombre = document.getElementById("acta-nombre");
 const btnGenerarActa = document.getElementById("btn-generar-acta");
 const btnImportarActa = document.getElementById("btn-importar-acta");
@@ -13,15 +10,20 @@ const actaEstado = document.getElementById("acta-estado");
 const actaHistorico = document.getElementById("acta-historico");
 
 const listaAsistentes = document.getElementById("lista-asistentes");
+const labelAsistenteForm = document.getElementById("label-asistente-form");
 const inputNuevoAsistenteNombre = document.getElementById("nuevo-asistente-nombre");
 const inputNuevoAsistenteCargo = document.getElementById("nuevo-asistente-cargo");
+const selNuevoAsistenteEstado = document.getElementById("nuevo-asistente-estado");
 const btnAgregarAsistente = document.getElementById("btn-agregar-asistente");
+const btnCancelarEdicionAsistente = document.getElementById("btn-cancelar-edicion-asistente");
 
 const listaObservaciones = document.getElementById("lista-observaciones");
 const inputNuevaObservacionTexto = document.getElementById("nueva-observacion-texto");
 const btnAgregarObservacion = document.getElementById("btn-agregar-observacion");
 
 let vistaActasCargada = false;
+let presentacionesCache = [];
+let asistenteEditandoId = null;   // null = modo "agregar", número = modo "editar"
 
 const menuActas = document.querySelector('.menu-item[data-vista="vista-actas"]');
 if (menuActas) {
@@ -35,62 +37,56 @@ if (menuActas) {
 }
 
 selActaEntidad.addEventListener("change", () => {
-  cargarFechasActa();
+  cargarPresentacionesActa();
   cargarAsistentes();
   cargarObservaciones();
 });
+selActaPresentacion.addEventListener("change", aplicarPresentacionSeleccionada);
 btnGenerarActa.addEventListener("click", generarActa);
 btnImportarActa.addEventListener("click", importarDesdeActa);
-btnAgregarAsistente.addEventListener("click", agregarAsistente);
+btnAgregarAsistente.addEventListener("click", guardarAsistente);
+btnCancelarEdicionAsistente.addEventListener("click", cancelarEdicionAsistente);
 btnAgregarObservacion.addEventListener("click", agregarObservacion);
-
-async function importarDesdeActa() {
-  const entidad = selActaEntidad.value;
-  if (!entidad) return;
-
-  importarEstado.textContent = "⏳ Importando...";
-  importarEstado.className = "ayuda";
-
-  const res = await fetch(`/api/acta/importar/${entidad}`, { method: "POST" });
-  const data = await res.json();
-
-  if (!res.ok || !data.ok) {
-    importarEstado.textContent = "❌ " + (data.error || "No se encontró ninguna acta anterior");
-    importarEstado.className = "ayuda error";
-    return;
-  }
-
-  const omitidos = (data.asistentes_omitidos || 0) + (data.observaciones_omitidas || 0);
-  const textoOmitidos = omitidos > 0 ? ` (${omitidos} ya existían, se omitieron)` : "";
-  importarEstado.textContent = `✅ Importado de "${data.archivo}": ${data.asistentes_importados} asistente(s) nuevo(s), ${data.observaciones_importadas} observación(es) nueva(s)${textoOmitidos}.`;
-  importarEstado.className = "ayuda ok";
-  cargarAsistentes();
-  cargarObservaciones();
-}
 
 async function cargarEntidadesActa() {
   const res = await fetch("/api/entidades");
   const entidades = await res.json();
   selActaEntidad.innerHTML = entidades.map((e) => `<option value="${escapeHtmlA(e.nombre)}">${escapeHtmlA(e.nombre)}</option>`).join("");
   if (entidades.length) {
-    cargarFechasActa();
+    cargarPresentacionesActa();
     cargarAsistentes();
     cargarObservaciones();
   }
 }
 
-async function cargarFechasActa() {
+// ─────────────── PRESENTACIÓN DE ORIGEN ───────────────
+
+async function cargarPresentacionesActa() {
   const entidad = selActaEntidad.value;
   if (!entidad) return;
-  const res = await fetch(`/api/acta/fechas/${entidad}`);
-  const fechas = await res.json();
-  const opciones = fechas.map((f) => `<option value="${f}">${f}</option>`).join("");
-  selActaFechaActual.innerHTML = opciones;
-  selActaFechaAnterior.innerHTML = opciones;
-  if (fechas.length > 1) selActaFechaAnterior.value = fechas[1];
+  const res = await fetch(`/api/acta/presentaciones/${entidad}`);
+  presentacionesCache = await res.json();
+
+  if (!presentacionesCache.length) {
+    selActaPresentacion.innerHTML = "<option value=''>Sin presentaciones generadas</option>";
+    return;
+  }
+
+  selActaPresentacion.innerHTML = presentacionesCache
+    .map((p, i) => `<option value="${i}">${escapeHtmlA(p.nombre)}</option>`).join("");
+  aplicarPresentacionSeleccionada();
 }
 
-// ─────────────── ASISTENTES ───────────────
+function aplicarPresentacionSeleccionada() {
+  const idx = parseInt(selActaPresentacion.value, 10);
+  const p = presentacionesCache[idx];
+  if (!p) return;
+  if (!inputActaFechaReunion.value) {
+    inputActaFechaReunion.value = p.fecha_actual;
+  }
+}
+
+// ─────────────── ASISTENTES (con edición) ───────────────
 
 async function cargarAsistentes() {
   const entidad = selActaEntidad.value;
@@ -106,30 +102,64 @@ async function cargarAsistentes() {
   listaAsistentes.innerHTML = asistentes.map((a) => `
     <div class="fila-item-simple">
       <span>${escapeHtmlA(a.nombre)}${a.cargo ? " — " + escapeHtmlA(a.cargo) : ""} <em>(${escapeHtmlA(a.estado || "Asistió")})</em></span>
-      <button type="button" class="btn-secundario" onclick="eliminarAsistente(${a.id})">Quitar</button>
+      <span>
+        <button type="button" class="btn-secundario" onclick='editarAsistente(${JSON.stringify(a)})'>Editar</button>
+        <button type="button" class="btn-secundario" onclick="eliminarAsistente(${a.id})">Quitar</button>
+      </span>
     </div>`).join("");
 }
 
-async function agregarAsistente() {
+function editarAsistente(a) {
+  asistenteEditandoId = a.id;
+  inputNuevoAsistenteNombre.value = a.nombre;
+  inputNuevoAsistenteCargo.value = a.cargo;
+  selNuevoAsistenteEstado.value = a.estado || "Asistió";
+  labelAsistenteForm.textContent = "Editando asistente:";
+  btnAgregarAsistente.textContent = "Guardar cambios";
+  btnCancelarEdicionAsistente.classList.remove("oculto");
+  inputNuevoAsistenteNombre.focus();
+}
+
+function cancelarEdicionAsistente() {
+  asistenteEditandoId = null;
+  inputNuevoAsistenteNombre.value = "";
+  inputNuevoAsistenteCargo.value = "";
+  selNuevoAsistenteEstado.value = "Asistió";
+  labelAsistenteForm.textContent = "Nombre";
+  btnAgregarAsistente.textContent = "+ Agregar";
+  btnCancelarEdicionAsistente.classList.add("oculto");
+}
+
+async function guardarAsistente() {
   const entidad = selActaEntidad.value;
   const nombre = inputNuevoAsistenteNombre.value.trim();
   if (!entidad || !nombre) return;
 
-  const res = await fetch(`/api/acta/asistentes/${entidad}`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ nombre, cargo: inputNuevoAsistenteCargo.value.trim() }),
-  });
-  if (!res.ok) return alert("No se pudo agregar el asistente");
+  const payload = {
+    nombre, cargo: inputNuevoAsistenteCargo.value.trim(),
+    estado: selNuevoAsistenteEstado.value,
+  };
 
-  inputNuevoAsistenteNombre.value = "";
-  inputNuevoAsistenteCargo.value = "";
+  const url = asistenteEditandoId
+    ? `/api/acta/asistentes/${entidad}/${asistenteEditandoId}`
+    : `/api/acta/asistentes/${entidad}`;
+  const metodo = asistenteEditandoId ? "PUT" : "POST";
+
+  const res = await fetch(url, {
+    method: metodo,
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) return alert("No se pudo guardar el asistente");
+
+  cancelarEdicionAsistente();
   cargarAsistentes();
 }
 
 async function eliminarAsistente(id) {
   const entidad = selActaEntidad.value;
   await fetch(`/api/acta/asistentes/${entidad}/${id}`, { method: "DELETE" });
+  if (asistenteEditandoId === id) cancelarEdicionAsistente();
   cargarAsistentes();
 }
 
@@ -175,23 +205,57 @@ async function eliminarObservacion(id) {
   cargarObservaciones();
 }
 
+// ─────────────── IMPORTAR (reemplaza, nunca duplica) ───────────────
+
+async function importarDesdeActa() {
+  const entidad = selActaEntidad.value;
+  if (!entidad) return;
+
+  if (!confirm("Esto va a reemplazar la lista actual de asistentes y observaciones "
+              + "con la de la última acta generada. ¿Continuar?")) return;
+
+  importarEstado.textContent = "⏳ Importando...";
+  importarEstado.className = "ayuda";
+
+  const res = await fetch(`/api/acta/importar/${entidad}`, { method: "POST" });
+  const data = await res.json();
+
+  if (!res.ok || !data.ok) {
+    importarEstado.textContent = "❌ " + (data.error || "No se encontró ninguna acta anterior");
+    importarEstado.className = "ayuda error";
+    return;
+  }
+
+  importarEstado.textContent = `✅ Importado de "${data.archivo}": ${data.asistentes_importados} asistente(s), ${data.observaciones_importadas} observación(es).`;
+  importarEstado.className = "ayuda ok";
+  cancelarEdicionAsistente();
+  cargarAsistentes();
+  cargarObservaciones();
+}
+
 // ─────────────── GENERAR ───────────────
 
 async function generarActa() {
+  const idx = parseInt(selActaPresentacion.value, 10);
+  const p = presentacionesCache[idx];
+
+  if (!p) {
+    actaEstado.textContent = "❌ Selecciona una presentación de origen";
+    actaEstado.className = "ayuda error";
+    return;
+  }
+
   const payload = {
     entidad: selActaEntidad.value,
-    fecha_actual: selActaFechaActual.value,
-    fecha_anterior: selActaFechaAnterior.value,
+    fecha_actual: p.fecha_actual,
+    fecha_anterior: p.fecha_anterior,
     numero: inputActaNumero.value.trim(),
     fecha_reunion: inputActaFechaReunion.value,
-    hora_inicio: inputActaHoraInicio.value.trim(),
-    hora_fin: inputActaHoraFin.value.trim(),
     nombre: inputActaNombre.value.trim() || null,
   };
 
-  if (!payload.entidad || !payload.fecha_actual || !payload.fecha_anterior ||
-      !payload.numero || !payload.fecha_reunion) {
-    actaEstado.textContent = "❌ Completa entidad, fechas, número y fecha de reunión";
+  if (!payload.entidad || !payload.numero || !payload.fecha_reunion) {
+    actaEstado.textContent = "❌ Completa entidad, número de acta y fecha de reunión";
     actaEstado.className = "ayuda error";
     return;
   }

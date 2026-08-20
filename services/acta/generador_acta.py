@@ -36,6 +36,9 @@ GRIS_CLARO = "F2F2F2"
 FONDO_ENCABEZADO = "1B2A4A"
 LOGO = BASE_DIR / "assets" / "logo_santander_color.png"
 
+FUENTE = "Arial"
+HORA_REUNION = "3:00 pm – 4:00 pm"   # horario fijo, no se pide en el formulario
+
 
 def _fecha_es(fecha_iso: str) -> str:
     try:
@@ -57,8 +60,30 @@ def _celda_texto(celda, texto, negrita=False, color=None, tamano=10):
     run = p.add_run(texto)
     run.bold = negrita
     run.font.size = Pt(tamano)
+    run.font.name = FUENTE
     if color is not None:
         run.font.color.rgb = color
+
+
+def _establecer_fuente_documento(doc: Document):
+    """Fuerza Arial como fuente por defecto del documento (estilo
+    'Normal'), para que cualquier texto que no tenga fuente explícita
+    también salga en Arial."""
+    try:
+        estilo = doc.styles["Normal"]
+        estilo.font.name = FUENTE
+        # También hay que setearlo a nivel XML para que aplique en todos
+        # los idiomas/plataformas (Word a veces ignora font.name solo).
+        rpr = estilo.element.get_or_add_rPr()
+        rfonts = rpr.find(qn("w:rFonts"))
+        if rfonts is None:
+            rfonts = rpr.makeelement(qn("w:rFonts"), {})
+            rpr.append(rfonts)
+        rfonts.set(qn("w:ascii"), FUENTE)
+        rfonts.set(qn("w:hAnsi"), FUENTE)
+        rfonts.set(qn("w:eastAsia"), FUENTE)
+    except Exception:
+        pass
 
 
 def _actualizar_celda_valor(tabla, etiqueta: str, nuevo_valor: str):
@@ -81,8 +106,13 @@ def _llenar_participantes(tabla, asistentes):
         fila = tabla.add_row()
         _celda_texto(fila.cells[0], a.nombre)
         _celda_texto(fila.cells[1], a.cargo)
-        if len(fila.cells) > 2:
-            _celda_texto(fila.cells[2], a.estado)
+        # La tabla de participantes SIEMPRE tiene 3 columnas (Nombre,
+        # Área/Cargo, Estado) — se escribe directo, sin condicional, para
+        # que "Estado" nunca quede vacío por accidente.
+        try:
+            _celda_texto(fila.cells[2], a.estado or "Asistió")
+        except IndexError:
+            pass
 
 
 def _llenar_metricas(tabla, tendencias):
@@ -117,10 +147,11 @@ def _llenar_glosario(tabla, filas_glosario):
 
 
 def _construir_desde_cero(entidad, tendencias, asistentes, observaciones, filas_glosario,
-                          fecha_texto, numero, hora_inicio, hora_fin) -> Document:
+                          fecha_texto, numero) -> Document:
     """Solo se usa la PRIMERA vez que se genera un acta para una entidad
     (cuando no hay ninguna anterior que editar)."""
     doc = Document()
+    _establecer_fuente_documento(doc)
 
     if LOGO.exists():
         p_logo = doc.add_paragraph()
@@ -134,6 +165,7 @@ def _construir_desde_cero(entidad, tendencias, asistentes, observaciones, filas_
     run = p.add_run(f"Acta de Seguimiento (Workstations) — {entidad.nombre}")
     run.bold = True
     run.font.size = Pt(18)
+    run.font.name = FUENTE
     run.font.color.rgb = ROJO_SANTANDER
 
     def _titulo(numero_sec, texto):
@@ -143,13 +175,13 @@ def _construir_desde_cero(entidad, tendencias, asistentes, observaciones, filas_
         r = p.add_run(f"{numero_sec}.  {texto}")
         r.bold = True
         r.font.size = Pt(13)
+        r.font.name = FUENTE
         r.font.color.rgb = NAVY
 
     _titulo("1", "Información General de la Reunión")
     tabla_info = doc.add_table(rows=4, cols=2)
     tabla_info.style = "Table Grid"
-    filas_info = [("Fecha", fecha_texto),
-                 ("Hora", f"{hora_inicio} – {hora_fin}" if hora_inicio or hora_fin else ""),
+    filas_info = [("Fecha", fecha_texto), ("Hora", HORA_REUNION),
                  ("Tema", entidad.tema_acta), ("Objetivo", entidad.objetivo_acta)]
     for i, (etq, val) in enumerate(filas_info):
         _celda_texto(tabla_info.rows[i].cells[0], etq, negrita=True)
@@ -159,7 +191,9 @@ def _construir_desde_cero(entidad, tendencias, asistentes, observaciones, filas_
     p_num = doc.add_paragraph()
     r1 = p_num.add_run("Acta N.º: ")
     r1.bold = True
-    p_num.add_run(str(numero))
+    r1.font.name = FUENTE
+    r2 = p_num.add_run(str(numero))
+    r2.font.name = FUENTE
     doc.add_paragraph()
 
     _titulo("2", "Participantes")
@@ -172,8 +206,10 @@ def _construir_desde_cero(entidad, tendencias, asistentes, observaciones, filas_
     doc.add_paragraph()
 
     _titulo("3", "Métricas")
-    doc.add_paragraph("A continuación se presenta el resumen de las métricas y su comportamiento, "
-                      "así mismo las respectivas acciones a desarrollar.")
+    p_intro = doc.add_paragraph()
+    r_intro = p_intro.add_run("A continuación se presenta el resumen de las métricas y su "
+                              "comportamiento, así mismo las respectivas acciones a desarrollar.")
+    r_intro.font.name = FUENTE
 
     tl = doc.add_table(rows=1, cols=3)
     tl.style = "Table Grid"
@@ -210,8 +246,7 @@ def _construir_desde_cero(entidad, tendencias, asistentes, observaciones, filas_
 
 
 def generar_acta(entidad_nombre: str, fecha_actual: str, fecha_anterior: str,
-                 numero: str, fecha_reunion: str, hora_inicio: str = "", hora_fin: str = "",
-                 nombre: str = None) -> dict:
+                 numero: str, fecha_reunion: str, nombre: str = None) -> dict:
     entidad_nombre = entidad_nombre.upper()
     entidad = EntidadRepository().obtener_por_nombre(entidad_nombre)
     if entidad is None:
@@ -233,11 +268,12 @@ def generar_acta(entidad_nombre: str, fecha_actual: str, fecha_anterior: str,
     if ruta_base is not None:
         # ── Camino normal: abrir y editar la última acta generada ──
         doc = Document(ruta_base)
+        _establecer_fuente_documento(doc)
 
         t_info = tabla_info_general(doc)
         if t_info is not None:
             _actualizar_celda_valor(t_info, "Fecha", fecha_texto)
-            _actualizar_celda_valor(t_info, "Hora", f"{hora_inicio} – {hora_fin}" if hora_inicio or hora_fin else "")
+            _actualizar_celda_valor(t_info, "Hora", HORA_REUNION)
             _actualizar_celda_valor(t_info, "Tema", entidad.tema_acta)
             _actualizar_celda_valor(t_info, "Objetivo", entidad.objetivo_acta)
 
@@ -248,8 +284,10 @@ def generar_acta(entidad_nombre: str, fecha_actual: str, fecha_anterior: str,
                     run.text = ""
                 if p.runs:
                     p.runs[0].text = f"Acta N.º: {numero}"
+                    p.runs[0].font.name = FUENTE
                 else:
-                    p.add_run(f"Acta N.º: {numero}")
+                    r = p.add_run(f"Acta N.º: {numero}")
+                    r.font.name = FUENTE
                 break
 
         t_part = tabla_participantes(doc)
@@ -269,7 +307,7 @@ def generar_acta(entidad_nombre: str, fecha_actual: str, fecha_anterior: str,
     else:
         # ── Primera vez para esta entidad: construir desde cero ──
         doc = _construir_desde_cero(entidad, tendencias, asistentes, observaciones,
-                                    filas_glosario, fecha_texto, numero, hora_inicio, hora_fin)
+                                    filas_glosario, fecha_texto, numero)
 
     nombre = (nombre or f"Acta {numero} de seguimiento (Workstations) {entidad_nombre}").strip()
     nombre = re.sub(r'[\\/:*?"<>|]+', "_", nombre)

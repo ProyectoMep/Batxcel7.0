@@ -43,10 +43,11 @@ def extraer_asistentes(ruta_docx: Path) -> list[dict]:
         celdas = [c.text.strip() for c in row.cells]
         if not celdas or not celdas[0]:
             continue
+        estado_celda = celdas[2].strip() if len(celdas) > 2 else ""
         resultado.append({
             "nombre": celdas[0],
             "cargo": celdas[1] if len(celdas) > 1 else "",
-            "estado": celdas[2] if len(celdas) > 2 else "Asistió",
+            "estado": estado_celda or "Asistió",
         })
     return resultado
 

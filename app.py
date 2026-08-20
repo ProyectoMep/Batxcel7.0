@@ -11,15 +11,13 @@ def create_app() -> Flask:
     from controllers.reporte_controller import reporte_bp
     from controllers.presentacion_controller import presentacion_bp
     from controllers.acta_controller import acta_bp
+    from controllers.prospera_controller import prospera_bp
     app.register_blueprint(metrica_bp)
     app.register_blueprint(entidad_bp)
     app.register_blueprint(reporte_bp)
     app.register_blueprint(presentacion_bp)
     app.register_blueprint(acta_bp)
-
-    # TODO (paso siguiente):
-    # from controllers.prospera_controller import prospera_bp
-    # app.register_blueprint(prospera_bp)
+    app.register_blueprint(prospera_bp)
 
     @app.route("/")
     def index():

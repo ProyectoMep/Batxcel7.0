@@ -13,7 +13,7 @@
       <button class="menu-item" data-vista="vista-metricas">📊 Métricas</button>
       <button class="menu-item" data-vista="vista-presentacion">📽️ Presentación</button>
       <button class="menu-item" data-vista="vista-actas">📝 Actas</button>
-      <button class="menu-item" disabled title="Próximamente">👥 Prospera</button>
+      <button class="menu-item" data-vista="vista-prospera">👥 Prospera</button>
     </nav>
 
     <main class="contenido">
@@ -100,57 +100,65 @@
         <h2>Generar acta de seguimiento</h2>
 
         <fieldset class="bloque">
-          <legend>1) Datos generales</legend>
-          <label>Entidad</label>
-          <select id="acta-entidad"></select>
-
-          <label>Fecha del reporte (semana actual)</label>
-          <select id="acta-fecha-actual"></select>
-
-          <label>Comparar contra (semana anterior)</label>
-          <select id="acta-fecha-anterior"></select>
+          <legend>Datos generales</legend>
 
           <div class="fila-inline">
-            <div style="flex:1;">
-              <label>Número de acta</label>
-              <input type="text" id="acta-numero" placeholder="12">
+            <div>
+              <label>Entidad</label>
+              <select id="acta-entidad"></select>
             </div>
-            <div style="flex:1;">
+            <div>
+              <label>Presentación de origen</label>
+              <select id="acta-presentacion"></select>
+            </div>
+            <div>
+              <label>Acta N.º</label>
+              <input type="text" id="acta-numero" placeholder="216">
+            </div>
+            <div>
               <label>Fecha de la reunión</label>
               <input type="date" id="acta-fecha-reunion">
             </div>
-          </div>
-
-          <div class="fila-inline">
-            <div style="flex:1;">
-              <label>Hora inicio</label>
-              <input type="text" id="acta-hora-inicio" placeholder="3:00 pm">
-            </div>
-            <div style="flex:1;">
-              <label>Hora fin</label>
-              <input type="text" id="acta-hora-fin" placeholder="4:00 pm">
+            <div>
+              <label>Nombre del archivo (opcional)</label>
+              <input type="text" id="acta-nombre" placeholder="Automático">
             </div>
           </div>
-
-          <label>Nombre del archivo (opcional)</label>
-          <input type="text" id="acta-nombre" placeholder="Acta 12 de seguimiento BSNC">
         </fieldset>
 
         <fieldset class="bloque">
-          <legend>2) Asistentes</legend>
-          <p class="ayuda">Se cargan automáticamente desde la última acta generada. Puedes agregar o quitar antes de generar la nueva.</p>
+          <legend>Asistentes</legend>
+          <p class="ayuda">Se cargan automáticamente desde la última acta generada. Puedes editar, agregar o quitar antes de generar la nueva.</p>
           <button type="button" id="btn-importar-acta" class="btn-secundario">📥 Importar desde la última acta generada</button>
           <p id="importar-estado" class="ayuda"></p>
           <div id="lista-asistentes"></div>
-          <div class="fila-inline">
-            <input type="text" id="nuevo-asistente-nombre" placeholder="Nombre">
-            <input type="text" id="nuevo-asistente-cargo" placeholder="Cargo">
-            <button type="button" id="btn-agregar-asistente" class="btn-secundario">+ Agregar</button>
+
+          <div class="fila-inline" style="margin-top:12px;">
+            <div>
+              <label id="label-asistente-form">Nombre</label>
+              <input type="text" id="nuevo-asistente-nombre" placeholder="Nombre">
+            </div>
+            <div>
+              <label>Cargo</label>
+              <input type="text" id="nuevo-asistente-cargo" placeholder="Cargo">
+            </div>
+            <div>
+              <label>Estado</label>
+              <select id="nuevo-asistente-estado">
+                <option value="Asistió">Asistió</option>
+                <option value="No asistió">No asistió</option>
+                <option value="Excusa">Excusa</option>
+              </select>
+            </div>
+            <div style="flex:0 0 auto; align-self:flex-end;">
+              <button type="button" id="btn-agregar-asistente" class="btn-secundario">+ Agregar</button>
+              <button type="button" id="btn-cancelar-edicion-asistente" class="btn-secundario oculto">Cancelar</button>
+            </div>
           </div>
         </fieldset>
 
         <fieldset class="bloque">
-          <legend>3) Observaciones y tareas de seguimiento</legend>
+          <legend>Observaciones y tareas de seguimiento</legend>
           <div id="lista-observaciones"></div>
           <div class="fila-inline">
             <input type="text" id="nueva-observacion-texto" placeholder="Escribe una observación o tarea...">
@@ -163,6 +171,34 @@
 
         <h2 style="margin-top:24px;">Actas generadas</h2>
         <div id="acta-historico"></div>
+      </section>
+
+      <!-- ═══════ VISTA: PROSPERA ═══════ -->
+      <section id="vista-prospera" class="oculto">
+        <h2>Usuarios Prospera</h2>
+        <p class="ayuda">Cruza el Resumen Cyber BSNC de la fecha seleccionada (hoja MFA) con el
+          archivo Cloud_Authentication actual y softerra, dejando solo usuarios Customer Sales &amp;
+          Support sin ningún método de autenticación.</p>
+
+        <fieldset class="bloque">
+          <legend>Generar Prospera</legend>
+          <label>Resumen BSNC (fecha base)</label>
+          <select id="prospera-fecha"></select>
+
+          <label>Archivo Cloud_Authentication (.xlsx)</label>
+          <input type="file" id="prospera-archivo" accept=".xlsx">
+
+          <label>Nombre del archivo (opcional)</label>
+          <input type="text" id="prospera-nombre" placeholder="Automático (con fecha)">
+
+          <div class="modal-acciones" style="justify-content:flex-start;">
+            <button type="button" id="btn-generar-prospera" class="btn-primario">Generar Prospera</button>
+          </div>
+          <p id="prospera-estado" class="ayuda"></p>
+        </fieldset>
+
+        <h2 style="margin-top:24px;">Archivos Prospera generados</h2>
+        <div id="prospera-historico"></div>
       </section>
 
     </main>
@@ -371,5 +407,6 @@
   <script src="{{ url_for('static', filename='js/reporte.js') }}"></script>
   <script src="{{ url_for('static', filename='js/presentacion.js') }}"></script>
   <script src="{{ url_for('static', filename='js/actas.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/prospera.js') }}"></script>
 </body>
 </html>
